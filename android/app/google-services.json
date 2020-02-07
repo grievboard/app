@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "99869646234",
+    "firebase_url": "https://grievboard-d1fc0.firebaseio.com",
+    "project_id": "grievboard-d1fc0",
+    "storage_bucket": "grievboard-d1fc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99869646234:android:125f36dca9caca5fcd2e23",
+        "android_client_info": {
+          "package_name": "com.example.grievboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99869646234-aq07srslld91hd9ch0m7e1trqesljlmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.grievboard",
+            "certificate_hash": "957c740f2c1e30ad3b028a0f00f29109a974bf36"
+          }
+        },
+        {
+          "client_id": "99869646234-kc5o479qlk2uvc1st43kc1cbrlv0it5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxFnJ9-4J03C3yV-h9A1TOOhoAnk7mcFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99869646234-kc5o479qlk2uvc1st43kc1cbrlv0it5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
