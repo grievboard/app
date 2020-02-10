@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:grievboard/ui/photoupload.dart';
  
 import 'package:grievboard/utils/firebase_auth.dart';
+//import 'package:progress_dialog/progress_dialog.dart';
 
 import 'Posts.dart';
 
@@ -12,12 +13,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //int _count = 0;
+ // ProgressDialog pr;
   List<Posts> postlist =  [];
 @override
   void initState() {
     
     super.initState();
-
     DatabaseReference postsref = FirebaseDatabase.instance.reference().child("Posts");
     postsref.once().then((DataSnapshot snap)
         {
@@ -33,6 +35,7 @@ class _HomePageState extends State<HomePage> {
               dta[individualKey]['description'],
               dta[individualKey]['date'],
               dta[individualKey]['time'],
+
             );
             postlist.add(posts);
 
@@ -58,6 +61,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           body: new Container(
+            
           
             child: postlist.length== 0 ? new LinearProgressIndicator() : new ListView.builder
             (
@@ -141,19 +145,28 @@ class _HomePageState extends State<HomePage> {
                     )
                     ],
                   ),
-
                   SizedBox(height: 10.0,),
-                  CircularProgressIndicator(),
-                  new Image.network(image, fit: BoxFit.cover),
-
+                   Image.network(image, fit: BoxFit.cover),
                   SizedBox(height: 10.0,),
-                  
-                   new Text
+                  new Row
+                  (
+                    mainAxisAlignment: MainAxisAlignment.start,
+
+                    children: <Widget>[
+                     new IconButton(
+                       alignment: Alignment.bottomLeft,
+                       onPressed: (){},
+                       icon: Icon(Icons.favorite_border, size: 35.0,color: Colors.blue,),
+                     ),
+                     new Text
                     (
                       description,
                       style: Theme.of(context).textTheme.subhead,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.right,
                     ),
+                    ],
+                  ),
+                   
                 ],
 
               ),

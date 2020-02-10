@@ -17,6 +17,7 @@ class AuthProvider {
     try {
       GoogleSignIn googleSignIn = GoogleSignIn();
       GoogleSignInAccount account = await googleSignIn.signIn();
+      
       if(account == null )
         return false;
       AuthResult res = await _auth.signInWithCredential(GoogleAuthProvider.getCredential(

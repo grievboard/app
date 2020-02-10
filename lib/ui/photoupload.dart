@@ -1,7 +1,11 @@
+//import 'dart:ffi';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grievboard/ui/home.dart';
+//import 'package:grievboard/utils/firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -21,6 +25,7 @@ class _PhotoUploadState extends State<PhotoUpload> {
   //ProgressDialog().update(message: "uploading");
 
   File sampleImage;
+  String status = 'false';
   String _myValue;
   String url;
   final formkey = new GlobalKey<FormState>();
@@ -70,11 +75,14 @@ class _PhotoUploadState extends State<PhotoUpload> {
 
       print("image url =" + url);
      
+      //DatabaseService();
+      saveToFirestore(url);
       saveToDatabase(url);
       
       ProgressDialog(context).dismiss();
      // ProgressDialog(context).show(message: "Posting...");
      gotoHomepage();
+     //HomePage();
      
     }
   }
@@ -103,14 +111,36 @@ class _PhotoUploadState extends State<PhotoUpload> {
     
   }
 
+  void saveToFirestore(url){
+
+    var dbtimeKey = new DateTime.now();
+    var formatDate = new DateFormat('MMM d,yyyy');
+    var formatTime = new DateFormat('EEEE, hh:mm aaa');
+
+    String date = formatDate.format(dbtimeKey);
+    String time = formatTime.format(dbtimeKey);
+    //String status ;
+
+
+    Firestore.instance.collection("posts").add({
+    //Future<Void> saveUser(FirebaseUser user) async {
+       "image ": url,
+      "description": _myValue,
+      "date": date,
+      "time": time,
+      "status" : status,
+      
+    });
+  }
+
   void gotoHomepage()
   {
-    Navigator.pushReplacement
+    Navigator.pop(
     (
-      context,
+      context),
        MaterialPageRoute(builder: (context)
        {
-         return new HomePage();
+         return HomePage();
        }
        )
     );
