@@ -67,7 +67,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           border: OutlineInputBorder(),
                           labelText: "Username",
                           labelStyle: TextStyle(fontSize: 15.0),
-                          hintText: "Must be at least 3 characters",
+                          hintText: "TYPE NICKNAME NOT YOUR NAME",
                         ),
                       ),
                     ),

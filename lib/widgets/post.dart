@@ -279,11 +279,17 @@ class _PostState extends State<Post> {
                   cycles: 0,
                   builder: (anim) => Transform.scale(
                     scale: anim.value,
-                    child: Icon(
-                      Icons.favorite,
-                      size: 80.0,
-                      color: Colors.red,
+                     child:Image.asset(
+                      'assets/images/partnership-handshake.png',
+                      height: 90.0,
+                      width: 90.0,
+                      
                     ),
+                    // child: Icon(
+                    //   Icons.favorite,
+                    //   size: 80.0,
+                    //   color: Colors.red,
+                    // ),
                   ),
                 )
               : Text(""),
@@ -301,28 +307,38 @@ class _PostState extends State<Post> {
             Padding(padding: EdgeInsets.only(top: 40.0, left: 20.0)),
             GestureDetector(
               onTap: handleLikePost,
-              child: Icon(
-                isLiked ? Icons.favorite : Icons.favorite_border,
-                size: 28.0,
-                color: Colors.pink,
-              ),
+              child: isLiked ? Image.asset(
+                      'assets/images/partnership-handshake.png',
+                      height: 40.0,
+                      width: 40.0,
+                      
+                    ) : Image.asset('assets/images/agreement.png',
+                    height: 40.0,
+                    width: 40.0,
+                    ),
+              // child: Icon(
+              //   isLiked ? Icons.favorite : Icons.favorite_border,
+              //   size: 28.0,
+              //   color: Colors.pink,
+              // ),
             ),
             Padding(padding: EdgeInsets.only(right: 20.0)),
-            GestureDetector(
-              onTap: () => showComments(
-                context,
-                postId: postId,
-                ownerId: ownerId,
-                mediaUrl: mediaUrl,
-              ),
-              child: Icon(
-                Icons.chat,
-                size: 28.0,
-                color: Colors.blue[900],
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () => showComments(
+            //     context,
+            //     postId: postId,
+            //     ownerId: ownerId,
+            //     mediaUrl: mediaUrl,
+            //   ),
+            //   // child: Icon(     REMOVE COMMENTED LINES TO ACTIVE COMMENT OPTION
+            //   //   Icons.chat,
+            //   //   size: 28.0,
+            //   //   color: Colors.blue[900],
+            //   // ),
+            // ),
           ],
         ),
+        SizedBox(height: 5.0,),
         Row(
           children: <Widget>[
             Container(
@@ -333,10 +349,14 @@ class _PostState extends State<Post> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
+        
               ),
+          
             ),
+          
           ],
         ),
+        SizedBox(height: 5.0,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
