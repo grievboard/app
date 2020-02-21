@@ -1,40 +1,27 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//cdimport 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:grievboard/ui/home.dart';
-import 'package:grievboard/ui/login.dart';
-import 'package:grievboard/ui/splash.dart';
+import './pages/home.dart';
 
-
-void main() => runApp(MyApp());
+void main() {
+  // Firestore.instance.settings(timestampsInSnapshotsEnabled: true).then((_) {
+  //   // print("Timestamps enabled in snapshots\n");
+  // }, onError: (_) {
+  //   // print("Error enabling timestamps in snapshots\n");
+  // });
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'GrievBoard',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
+        accentColor: Colors.teal,
       ),
-      home: MainScreen(),
-    );
-  }
-}
-
-
-class MainScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseAuth.instance.onAuthStateChanged,
-      builder: (context,AsyncSnapshot<FirebaseUser> snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting)
-          return SplashPage();
-        if(!snapshot.hasData || snapshot.data == null)
-          return LoginPage();
-        return HomePage();
-      },
+      home: Home(),
     );
   }
 }

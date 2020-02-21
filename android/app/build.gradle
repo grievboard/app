@@ -46,6 +46,13 @@ android {
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    // allprojects{
+    //     gradle.projectsEvaluated {
+    //         tasks.withType(javaCompile){
+    //             options.compilerArgs << "-Xlint:deprecation"
+    //         }
+    //     }   
+    // }
 
     buildTypes {
         release {
