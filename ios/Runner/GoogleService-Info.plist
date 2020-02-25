@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>99869646234-tadjeuiup3gtkhup61627anaar61f1e7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.99869646234-tadjeuiup3gtkhup61627anaar61f1e7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>99869646234-aq07srslld91hd9ch0m7e1trqesljlmo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBk8FhhNSkO75K8XLy4O_DUwN5y_oo0mdg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>99869646234</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.grievboard</string>
+	<key>PROJECT_ID</key>
+	<string>grievboard-d1fc0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>grievboard-d1fc0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:99869646234:ios:6cf4f1a728a63aa9cd2e23</string>
+	<key>DATABASE_URL</key>
+	<string>https://grievboard-d1fc0.firebaseio.com</string>
+</dict>
+</plist>
