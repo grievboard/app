@@ -14,6 +14,7 @@ class ActivityFeed extends StatefulWidget {
 }
 
 class _ActivityFeedState extends State<ActivityFeed> {
+  SliverList newsListSliver;
   getActivityFeed() async {
     QuerySnapshot snapshot = await activityFeedRef
         .document(currentUser.id)
@@ -29,6 +30,10 @@ class _ActivityFeedState extends State<ActivityFeed> {
     return feedItems;
   }
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,16 +41,24 @@ class _ActivityFeedState extends State<ActivityFeed> {
       appBar: header(context, titleText: "Activity Feed"),
       body: Container(
           child: FutureBuilder(
-        future: getActivityFeed(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return circularProgress();
-          }
-          return ListView(
-            children: snapshot.data,
-          );
-        },
-      )),
+            future: getActivityFeed(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return circularProgress();
+              }
+              newsListSliver = SliverList(delegate: SliverChildBuilderDelegate((context,index)=>snapshot.data[index],childCount: snapshot.data.length));
+
+              return CustomScrollView(
+                slivers: <Widget>[
+              SliverToBoxAdapter( child: Container(child: Text("hello"),)),
+                  newsListSliver
+                ],
+              );
+//              return ListView(
+//                children: snapshot.data,
+//              );
+            },
+          )),
     );
   }
 }

@@ -271,6 +271,7 @@ class _PostState extends State<Post> {
         alignment: Alignment.center,
         children: <Widget>[
           cachedNetworkImage(mediaUrl),
+          //Card(child: Container(height: 100.0,width: 400.0,child: Center(child: Text("Dummy"))),),
           showHeart
               ? Animator(
                   duration: Duration(milliseconds: 300),
@@ -283,7 +284,7 @@ class _PostState extends State<Post> {
                       'assets/images/partnership-handshake.png',
                       height: 90.0,
                       width: 90.0,
-                      
+
                     ),
                     // child: Icon(
                     //   Icons.favorite,

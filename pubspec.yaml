@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   provider: ^4.0.4
+  avatar_glow: ^1.1.0
 
   cloud_firestore: ^0.13.2+1
   firebase_auth: ^0.15.4
