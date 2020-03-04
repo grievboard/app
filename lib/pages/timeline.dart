@@ -8,6 +8,8 @@ import '../widgets/header.dart';
 import '../widgets/post.dart';
 import '../widgets/progress.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import './upload.dart';
+import './newpost.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
@@ -21,8 +23,8 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  //MediaQuery.of(context).size.height
- double top,bottom,left,right;
+  //
+  double top, bottom, left = 0, right;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   SliverList newsListSliver;
   List<Post> posts;
@@ -31,25 +33,26 @@ class _TimelineState extends State<Timeline> {
 
   _scrollListener() {
     //896
- if(_controller.offset<(MediaQuery.of(context).size.height/2)-290){
-   setState(() {
-top =  -140.0+_controller.offset+(MediaQuery.of(context).size.height)/2;
-left = -40.0+_controller.offset+MediaQuery.of(context).size.width/2;
-   });
- }
+    if (_controller.offset < (MediaQuery.of(context).size.height / 2) - 290) {
+      setState(() {
+        top = -140.0 +
+            _controller.offset +
+            (MediaQuery.of(context).size.height) / 2;
+        left =
+            -40.0 + _controller.offset + MediaQuery.of(context).size.width / 2;
+      });
+    }
     print(_controller.offset);
   }
 
   @override
   void initState() {
-
-
-
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
 
     super.initState();
     getTimeline();
+    print(top);
     //getFollowing();
   }
 
@@ -78,6 +81,8 @@ left = -40.0+_controller.offset+MediaQuery.of(context).size.width/2;
 
   buildTimeline() {
     if (posts == null) {
+      top = -140 + MediaQuery.of(context).size.height / 2;
+      left = -40 + MediaQuery.of(context).size.width / 2;
       return circularProgress();
     } else if (posts.isEmpty) {
       return buildUsersToFollow();
@@ -86,11 +91,14 @@ left = -40.0+_controller.offset+MediaQuery.of(context).size.width/2;
           delegate: SliverChildBuilderDelegate((context, index) => posts[index],
               childCount: posts.length));
 
-      return Stack(fit: StackFit.expand,children: <Widget>[CustomScrollView(
-        controller: _controller,
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-              child: Container(
+      return Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          CustomScrollView(
+            controller: _controller,
+            slivers: <Widget>[
+              SliverToBoxAdapter(
+                  child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.only(bottom: 200.0),
@@ -103,38 +111,76 @@ left = -40.0+_controller.offset+MediaQuery.of(context).size.width/2;
 //                              duration: Duration(milliseconds: 500));
 //                        },
 //                        child: Text("hello"))),
-                  child: AvatarGlow(
-                    endRadius: 90.0,
-                    startDelay: Duration(milliseconds: 1000),
-                    glowColor: Colors.blue,
-                    shape: BoxShape.circle,
-                    animate: true,
-                    curve: Curves.fastOutSlowIn,
-                    duration: Duration(milliseconds: 2000),
-                    repeat: true,
-                    showTwoGlows: true,
-                    repeatPauseDuration: Duration(milliseconds: 100),//required
-                    child: Material(   //required
-                      elevation: 8.0,
-                      shape: CircleBorder(),
 
-
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: (MediaQuery.of(context).size.height / 2) - 210,
                     ),
-                  ),
+                    Text(
+                      "Press to post a Grievience",
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    AvatarGlow(
+                      endRadius: 90.0,
+                      startDelay: Duration(milliseconds: 1000),
+                      glowColor: Colors.blue,
+                      shape: BoxShape.circle,
+                      animate: true,
+                      curve: Curves.fastOutSlowIn,
+                      duration: Duration(milliseconds: 2000),
+                      repeat: true,
+                      showTwoGlows: true,
+                      repeatPauseDuration: Duration(milliseconds: 100),
+                      //required
+                      child: Material(
+                        //required
+                        elevation: 8.0,
+                        shape: CircleBorder(),
+                      ),
+
+                    ),Padding(
+                      padding: const EdgeInsets.only(top: 100.0),
+                      child: OutlineButton(
+                          onPressed: () {
+                            _controller.animateTo(
+                                MediaQuery.of(context).size.height - 10,
+                                curve: Curves.linear,
+                                duration: Duration(milliseconds: 500));
+                          },
+                          child: Text("▼ click to scroll down")),
+                    )
+                  ],
+                ),
               )),
-          newsListSliver
+              newsListSliver
+            ],
+          ),
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 0),
+            top: top,
+            left: left,
+            child: Material(
+              //required
+              elevation: 8.0,
+              shape: CircleBorder(),
+
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return NewPost(currentUser: currentUser);
+                  }));
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey[100],
+                  child: Icon(Icons.add),
+                  radius: 40.0,
+                ),
+              ),
+            ),
+          )
         ],
-      ),AnimatedPositioned(duration: Duration(milliseconds: 0),top: top,left: left,child:Material(   //required
-        elevation: 8.0,
-        shape: CircleBorder(),
-
-        child: CircleAvatar(
-          backgroundColor:Colors.grey[100] ,
-          child: Icon(Icons.add),
-          radius: 40.0,
-
-        ),
-      ),)],);
+      );
     }
   }
 
