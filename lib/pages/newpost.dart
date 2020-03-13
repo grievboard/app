@@ -76,7 +76,7 @@ class NewPostState extends State<NewPost> {
           child: Column(
             children: <Widget>[
               Container(
-                height: 400.0,
+                height: 300.0,
                 child: ListView.builder(
                     itemCount: consequences.length,
                     itemBuilder: (context, i) {

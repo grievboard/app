@@ -48,12 +48,14 @@ class _HomeState extends State<Home> {
     // Detects when user signed in
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account);
+      print("oneee");
     }, onError: (err) {
       print('Error signing in: $err');
     });
     // Reauthenticate user when app is opened
     googleSignIn.signInSilently(suppressErrors: false).then((account) {
       handleSignIn(account);
+      print("twoooo");
       print("Success");
      
     }).catchError((err) {

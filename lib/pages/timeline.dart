@@ -10,6 +10,8 @@ import '../widgets/progress.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import './upload.dart';
 import './newpost.dart';
+import './postpages/page1.dart';
+import '../utils/transitionz.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
@@ -168,7 +170,7 @@ class _TimelineState extends State<Timeline> {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return NewPost(currentUser: currentUser);
+                    return pageOne(currentUser: currentUser);
                   }));
                 },
                 child: CircleAvatar(

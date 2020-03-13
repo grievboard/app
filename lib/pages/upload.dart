@@ -24,8 +24,11 @@ import 'package:uuid/uuid.dart';
 
 class Upload extends StatefulWidget {
   final User currentUser;
+  String name;
+  String desc;
+  List<String> consequences;
 
-  Upload({this.currentUser});
+  Upload({this.currentUser,this.name,this.consequences,this.desc});
 
   @override
   _UploadState createState() => _UploadState();
@@ -82,6 +85,7 @@ class _UploadState extends State<Upload>
   }
 
   Container buildSplashScreen() {
+    print(widget.consequences);
     return Container(
       color: Theme.of(context).accentColor.withOpacity(0.6),
       child: Column(
@@ -149,7 +153,49 @@ class _UploadState extends State<Upload>
       "location": location,
       "timestamp": timestamp,
       "likes": {},
+      "status":"notack",
+      "gpocname":null,
+      "gpoccontact":null,
+      "isPrivate": false,
+      "consequences":widget.consequences,
+      "name":widget.name
     });
+  }
+
+  Widget giveButton(){
+    return RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Text(
+          "Upload Image",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22.0,
+          ),
+        ),
+        color: Colors.deepOrange,
+        onPressed: () => selectImage(context));
+  }
+
+  Widget giveImage(){
+    return Container(
+      height: 220.0,
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: Center(
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: FileImage(file),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   handleSubmit() async {
@@ -208,23 +254,7 @@ class _UploadState extends State<Upload>
       body: ListView(
         children: <Widget>[
           isUploading ? linearProgress(): Text(""),
-          Container(
-            height: 220.0,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: FileImage(file),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          file == null ? giveButton() : giveImage(),
           Padding(
             padding: EdgeInsets.only(top: 10.0),
           ),
@@ -306,6 +336,37 @@ class _UploadState extends State<Upload>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return file == null ? buildSplashScreen() : buildUploadForm();
+    return  buildUploadForm();
   }
 }
+
+//class Post {
+//
+//    String postId;
+//    String name;
+//    String ownerId;
+//    String username;
+//    String description;
+//    String location;
+//    String mediaUrl;
+//    String status;     //notack,ack,done
+//    String gpocname;
+//    String gpoccontact;
+//    bool isPrivate;
+//    List<String> consequences;
+//    DateTime timestamp;
+//    Map<String,bool> likes;
+//
+//  }
+
+
+
+
+
+
+
+
+
+
+
+
