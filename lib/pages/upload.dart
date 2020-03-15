@@ -153,7 +153,7 @@ class _UploadState extends State<Upload>
       "location": location,
       "timestamp": timestamp,
       "likes": {},
-      "status":"notack",
+      "status":"notAck",
       "gpocname":null,
       "gpoccontact":null,
       "isPrivate": false,
@@ -359,7 +359,29 @@ class _UploadState extends State<Upload>
 //
 //  }
 
-
+//createPostInFirestore(
+//    {String mediaUrl, String location, String description}) {
+//  postsRef
+//      .document(widget.currentUser.id)
+//      .collection("userPosts")
+//      .document(postId)
+//      .setData({
+//    "postId": postId,
+//    "ownerId": widget.currentUser.id,
+//    "username": widget.currentUser.username,
+//    "mediaUrl": mediaUrl,
+//    "description": description,
+//    "location": location,
+//    "timestamp": timestamp,
+//    "likes": {},
+//    "status":"notack",
+//    "gpocname":null,
+//    "gpoccontact":null,
+//    "isPrivate": false,
+//    "consequences":widget.consequences,
+//    "name":widget.name
+//  });
+//}
 
 
 
