@@ -60,8 +60,8 @@ class _TimelineState extends State<Timeline> {
 
   getTimeline() async {
     QuerySnapshot snapshot = await timelineRef
-        .document(widget.currentUser.id)
-        .collection('timelinePosts')
+//        .document(widget.currentUser.id)
+//        .collection('timelinePosts')
         .orderBy('timestamp', descending: true)
         .getDocuments();
     List<Post> posts =
