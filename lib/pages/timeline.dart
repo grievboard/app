@@ -27,24 +27,33 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   //
   double top, bottom, left = 0, right;
+  double scale = 1;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  SliverList newsListSliver;
+  var newsListSliver;
   List<Post> posts;
   List<String> followingList = [];
   ScrollController _controller;
 
   _scrollListener() {
     //896
-    if (_controller.offset < (MediaQuery.of(context).size.height / 2) - 290) {
+
+    if ((_controller.offset < (MediaQuery.of(context).size.height) * 0.1699)) {
+      scale = 1 - (_controller.offset * 2) / 1000;
       setState(() {
-        top = -140.0 +
-            _controller.offset +
+        top = -45.0 +
+            _controller.offset * 2 +
             (MediaQuery.of(context).size.height) / 2;
-        left =
-            -40.0 + _controller.offset + MediaQuery.of(context).size.width / 2;
+        if (left + _controller.offset < MediaQuery.of(context).size.width) {
+          left = -67.0 +
+              _controller.offset +
+              MediaQuery.of(context).size.width / 2;
+        }
       });
     }
     print(_controller.offset);
+    print(MediaQuery.of(context).size.width);
+    print("top:");
+    print(left);
   }
 
   @override
@@ -83,8 +92,9 @@ class _TimelineState extends State<Timeline> {
 
   buildTimeline() {
     if (posts == null) {
-      top = -140 + MediaQuery.of(context).size.height / 2;
-      left = -40 + MediaQuery.of(context).size.width / 2;
+      top = -45 + MediaQuery.of(context).size.height / 2;
+      left = -67 + (MediaQuery.of(context).size.width / 2);
+      setState(() {});
       return circularProgress();
     } else if (posts.isEmpty) {
       return buildUsersToFollow();
@@ -93,6 +103,21 @@ class _TimelineState extends State<Timeline> {
           delegate: SliverChildBuilderDelegate((context, index) => posts[index],
               childCount: posts.length));
 
+//      SliverList(
+//          delegate: SliverChildBuilderDelegate((context, index) => posts[index],
+//              childCount: posts.length));
+
+//      newsListSliver=  SliverToBoxAdapter(
+//        child: Container(
+//          height: 100.0,
+//          child: ListView.builder(
+//            scrollDirection: Axis.horizontal,
+//            itemCount:  posts.length,
+//            itemBuilder: (context, index) => posts[index],
+//          ),
+//        ),
+//      );
+
       return Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -100,60 +125,81 @@ class _TimelineState extends State<Timeline> {
             controller: _controller,
             slivers: <Widget>[
               SliverToBoxAdapter(
-                  child: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(bottom: 200.0),
-//                child: Center(
-//                    child: InkWell(
-//                        onTap: () {
-//                          _controller.animateTo(
-//                              MediaQuery.of(context).size.height - 10,
-//                              curve: Curves.linear,
-//                              duration: Duration(milliseconds: 500));
-//                        },
-//                        child: Text("hello"))),
+                  child: Column(
+                children: <Widget>[
+                  SizedBox(height: 50.0,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                  mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.sort,
+              color: Colors.white,size: 30.0,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                  Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    " GRIET",
+                    style: TextStyle(letterSpacing: 2.0,
 
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: (MediaQuery.of(context).size.height / 2) - 210,
+                      color: Colors.white,
                     ),
-                    Text(
-                      "Press to post a Grievience",
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    AvatarGlow(
-                      endRadius: 90.0,
-                      startDelay: Duration(milliseconds: 1000),
-                      glowColor: Colors.blue,
-                      shape: BoxShape.circle,
-                      animate: true,
-                      curve: Curves.fastOutSlowIn,
-                      duration: Duration(milliseconds: 2000),
-                      repeat: true,
-                      showTwoGlows: true,
-                      repeatPauseDuration: Duration(milliseconds: 100),
-                      //required
-                      child: Material(
-                        //required
-                        elevation: 8.0,
-                        shape: CircleBorder(),
-                      ),
-
-                    ),Padding(
-                      padding: const EdgeInsets.only(top: 100.0),
-                      child: OutlineButton(
-                          onPressed: () {
-                            _controller.animateTo(
-                                MediaQuery.of(context).size.height - 10,
-                                curve: Curves.linear,
-                                duration: Duration(milliseconds: 500));
-                          },
-                          child: Text("▼ click to scroll down")),
-                    )
-                  ],
+                  ),Icon(Icons.keyboard_arrow_down,color: Colors.white,size: 10.0,)
+              ],
+            ),
+          )
+        ],
+      ),
                 ),
+                  SizedBox(
+                    height: (MediaQuery.of(context).size.height / 2) - 210,
+                  ),
+//                      Text(
+//                        "G r i e v B o a r d",
+//                        style: TextStyle(fontWeight: FontWeight.w200,color: Colors.white,fontSize: 24.0),
+//                      ),
+
+                  AvatarGlow(
+                    endRadius: 130.0 * scale,
+                    startDelay: Duration(milliseconds: 1000),
+                    glowColor: Colors.white,
+                    shape: BoxShape.circle,
+                    animate: true,
+                    curve: Curves.fastOutSlowIn,
+                    duration: Duration(milliseconds: 2000),
+                    repeat: true,
+                    showTwoGlows: true,
+                    repeatPauseDuration: Duration(milliseconds: 100),
+                    //required
+                    child: Material(
+                      //required
+                      elevation: 8.0,
+                      shape: CircleBorder(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: OutlineButton(
+                        onPressed: () {
+                          _controller.animateTo(
+                              MediaQuery.of(context).size.height - 10,
+                              curve: Curves.linear,
+                              duration: Duration(milliseconds: 500));
+                        },
+                        child: Text("▼ click to scroll down")),
+                  )
+                ],
               )),
               newsListSliver
             ],
@@ -174,9 +220,13 @@ class _TimelineState extends State<Timeline> {
                   }));
                 },
                 child: CircleAvatar(
-                  backgroundColor: Colors.grey[100],
-                  child: Icon(Icons.add),
-                  radius: 40.0,
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                    size: 50.0,
+                  ),
+                  radius: 70.0 * scale,
                 ),
               ),
             ),
@@ -282,8 +332,8 @@ class _TimelineState extends State<Timeline> {
   @override
   Widget build(context) {
     return Scaffold(
+        backgroundColor: Colors.black,
         key: _scaffoldKey,
-        appBar: header(context, isAppTitle: true),
         body: RefreshIndicator(
           onRefresh: () => getTimeline(),
           child: buildTimeline(),

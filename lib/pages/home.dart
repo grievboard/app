@@ -202,22 +202,22 @@ class _HomeState extends State<Home> {
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: CupertinoTabBar(
-          currentIndex: pageIndex,
-          onTap: onTap,
-          activeColor: Theme.of(context).primaryColor,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
-            //BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.photo_camera,
-                size: 35.0,
-              ),
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.search)),
-            BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
-          ]),
+//      bottomNavigationBar: CupertinoTabBar(
+//          currentIndex: pageIndex,
+//          onTap: onTap,
+//          activeColor: Theme.of(context).primaryColor,
+//          items: [
+//            BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
+//            //BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
+//            BottomNavigationBarItem(
+//              icon: Icon(
+//                Icons.photo_camera,
+//                size: 35.0,
+//              ),
+//            ),
+//            BottomNavigationBarItem(icon: Icon(Icons.search)),
+//            BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
+//          ]),
     );
     // return RaisedButton(
     //   child: Text('Logout'),
