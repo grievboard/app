@@ -3,9 +3,9 @@ import 'page2.dart';
 import 'package:grievboard/models/user.dart';
 import 'package:grievboard/pages/upload.dart';
 
-TextEditingController name = new TextEditingController();
-TextEditingController desc = new TextEditingController();
-List<String> consequences = [];
+Function refresh;
+
+
 
 class SlideLeftRoute extends PageRouteBuilder {
   final Widget page;
@@ -36,8 +36,9 @@ class SlideLeftRoute extends PageRouteBuilder {
 
 class pageOne extends StatefulWidget {
   final User currentUser;
+  Function temp;
 
-  pageOne({this.currentUser});
+  pageOne({this.currentUser,this.temp});
 
   @override
   State<StatefulWidget> createState() {
@@ -50,8 +51,10 @@ class pageOne extends StatefulWidget {
 //})
 
 class pageOneState extends State<pageOne> {
+  TextEditingController name = new TextEditingController();
   @override
   Widget build(BuildContext context) {
+    refresh=widget.temp;
     return Scaffold(
       appBar: AppBar(
         title: Text("Name"),
@@ -72,7 +75,7 @@ class pageOneState extends State<pageOne> {
               Navigator.push(
                   context,
                   SlideLeftRoute(
-                      page: pageTwo(currentUser: widget.currentUser)));
+                      page: pageTwo(currentUser: widget.currentUser,name: name.text,)));
             },
           )
         ],
@@ -83,8 +86,9 @@ class pageOneState extends State<pageOne> {
 
 class pageTwo extends StatefulWidget {
   final User currentUser;
+  String name;
 
-  pageTwo({this.currentUser});
+  pageTwo({this.currentUser,this.name});
 
   @override
   State<StatefulWidget> createState() {
@@ -93,6 +97,7 @@ class pageTwo extends StatefulWidget {
 }
 
 class pageTwoState extends State<pageTwo> {
+  List<String> consequences = [];
   static var temp = "hello";
   TextEditingController inBox = new TextEditingController();
 
@@ -155,7 +160,7 @@ class pageTwoState extends State<pageTwo> {
               Navigator.push(
                   context,
                   SlideLeftRoute(
-                      page: pageThree(currentUser: widget.currentUser)));
+                      page: pageThree(currentUser: widget.currentUser,consequences: consequences,name: widget.name,)));
             },
           )
         ],
@@ -166,8 +171,9 @@ class pageTwoState extends State<pageTwo> {
 
 class pageThree extends StatefulWidget {
   final User currentUser;
-
-  pageThree({this.currentUser});
+  List<String> consequences = [];
+  String name;
+  pageThree({this.currentUser,this.name,this.consequences});
 
   @override
   State<StatefulWidget> createState() {
@@ -177,6 +183,7 @@ class pageThree extends StatefulWidget {
 }
 
 class pageThreeState extends State<pageThree> {
+  TextEditingController desc = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -203,9 +210,10 @@ class pageThreeState extends State<pageThree> {
                   SlideLeftRoute(
                       page: Upload(
                     currentUser: widget.currentUser,
-                    name: name.text,
+                    name: widget.name,
                     desc: desc.text,
-                    consequences: consequences,
+                    consequences: widget.consequences,
+                        refresh: refresh,
                   )));
             },
           )

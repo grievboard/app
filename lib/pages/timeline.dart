@@ -8,7 +8,7 @@ import '../widgets/header.dart';
 import '../widgets/post.dart';
 import '../widgets/progress.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import './upload.dart';
+import './profile.dart';
 import './newpost.dart';
 import './postpages/page1.dart';
 import '../utils/transitionz.dart';
@@ -26,7 +26,10 @@ class Timeline extends StatefulWidget {
 
 class _TimelineState extends State<Timeline> {
   //
-  double top, bottom, left = 0, right;
+  double top,
+      bottom,
+      left = 0,
+      right;
   double scale = 1;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var newsListSliver;
@@ -37,21 +40,36 @@ class _TimelineState extends State<Timeline> {
   _scrollListener() {
     //896
 
-    if ((_controller.offset < (MediaQuery.of(context).size.height) * 0.1699)) {
+    if ((_controller.offset >= 0) && (_controller.offset < (MediaQuery
+        .of(context)
+        .size
+        .height) * 0.1699)) {
       scale = 1 - (_controller.offset * 2) / 1000;
       setState(() {
         top = -45.0 +
             _controller.offset * 2 +
-            (MediaQuery.of(context).size.height) / 2;
-        if (left + _controller.offset < MediaQuery.of(context).size.width) {
+            (MediaQuery
+                .of(context)
+                .size
+                .height) / 2;
+        if (left + _controller.offset < MediaQuery
+            .of(context)
+            .size
+            .width) {
           left = -67.0 +
               _controller.offset +
-              MediaQuery.of(context).size.width / 2;
+              MediaQuery
+                  .of(context)
+                  .size
+                  .width / 2;
         }
       });
     }
     print(_controller.offset);
-    print(MediaQuery.of(context).size.width);
+    print(MediaQuery
+        .of(context)
+        .size
+        .width);
     print("top:");
     print(left);
   }
@@ -74,7 +92,7 @@ class _TimelineState extends State<Timeline> {
         .orderBy('timestamp', descending: true)
         .getDocuments();
     List<Post> posts =
-        snapshot.documents.map((doc) => Post.fromDocument(doc)).toList();
+    snapshot.documents.map((doc) => Post.fromDocument(doc)).toList();
     setState(() {
       this.posts = posts;
     });
@@ -92,8 +110,14 @@ class _TimelineState extends State<Timeline> {
 
   buildTimeline() {
     if (posts == null) {
-      top = -45 + MediaQuery.of(context).size.height / 2;
-      left = -67 + (MediaQuery.of(context).size.width / 2);
+      top = -45 + MediaQuery
+          .of(context)
+          .size
+          .height / 2;
+      left = -67 + (MediaQuery
+          .of(context)
+          .size
+          .width / 2);
       setState(() {});
       return circularProgress();
     } else if (posts.isEmpty) {
@@ -126,81 +150,97 @@ class _TimelineState extends State<Timeline> {
             slivers: <Widget>[
               SliverToBoxAdapter(
                   child: Column(
-                children: <Widget>[
-                  SizedBox(height: 50.0,),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                  mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.sort,
-              color: Colors.white,size: 30.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: <Widget>[
-                  Icon(
-                    Icons.location_on,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    " GRIET",
-                    style: TextStyle(letterSpacing: 2.0,
+                    children: <Widget>[
+                      SizedBox(height: 50.0,),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Profile(
+                                          profileId: currentUser?.id);
+                                    }));
+                              },
+                                child: Icon(
+                                  Icons.sort,
+                                  color: Colors.white, size: 30.0,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.location_on,
+                                    color: Colors.white,
+                                  ),
+                                  Text(
+                                    " GRIET",
+                                    style: TextStyle(letterSpacing: 2.0,
 
-                      color: Colors.white,
-                    ),
-                  ),Icon(Icons.keyboard_arrow_down,color: Colors.white,size: 10.0,)
-              ],
-            ),
-          )
-        ],
-      ),
-                ),
-                  SizedBox(
-                    height: (MediaQuery.of(context).size.height / 2) - 210,
-                  ),
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Icon(Icons.keyboard_arrow_down,
+                                    color: Colors.white, size: 10.0,)
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: (MediaQuery
+                            .of(context)
+                            .size
+                            .height / 2) - 210,
+                      ),
 //                      Text(
 //                        "G r i e v B o a r d",
 //                        style: TextStyle(fontWeight: FontWeight.w200,color: Colors.white,fontSize: 24.0),
 //                      ),
 
-                  AvatarGlow(
-                    endRadius: 130.0 * scale,
-                    startDelay: Duration(milliseconds: 1000),
-                    glowColor: Colors.white,
-                    shape: BoxShape.circle,
-                    animate: true,
-                    curve: Curves.fastOutSlowIn,
-                    duration: Duration(milliseconds: 2000),
-                    repeat: true,
-                    showTwoGlows: true,
-                    repeatPauseDuration: Duration(milliseconds: 100),
-                    //required
-                    child: Material(
-                      //required
-                      elevation: 8.0,
-                      shape: CircleBorder(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: OutlineButton(
-                        onPressed: () {
-                          _controller.animateTo(
-                              MediaQuery.of(context).size.height - 10,
-                              curve: Curves.linear,
-                              duration: Duration(milliseconds: 500));
-                        },
-                        child: Text("▼ click to scroll down")),
-                  )
-                ],
-              )),
+                      AvatarGlow(
+                        endRadius: 130.0 * scale,
+                        startDelay: Duration(milliseconds: 1000),
+                        glowColor: Colors.white,
+                        shape: BoxShape.circle,
+                        animate: true,
+                        curve: Curves.fastOutSlowIn,
+                        duration: Duration(milliseconds: 2000),
+                        repeat: true,
+                        showTwoGlows: true,
+                        repeatPauseDuration: Duration(milliseconds: 100),
+                        //required
+                        child: Material(
+                          //required
+                          elevation: 8.0,
+                          shape: CircleBorder(),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: OutlineButton(
+                            onPressed: () {
+                              _controller.animateTo(
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height - 10,
+                                  curve: Curves.linear,
+                                  duration: Duration(milliseconds: 500));
+                            },
+                            child: Text("▼ click to scroll down")),
+                      )
+                    ],
+                  )),
               newsListSliver
             ],
           ),
@@ -216,8 +256,9 @@ class _TimelineState extends State<Timeline> {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return pageOne(currentUser: currentUser);
+                    return pageOne(currentUser: currentUser, temp: getTimeline);
                   }));
+                  print("Lets see");
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -239,7 +280,7 @@ class _TimelineState extends State<Timeline> {
   buildUsersToFollow() {
     return StreamBuilder(
       stream:
-          usersRef.orderBy('timestamp', descending: true).limit(30).snapshots(),
+      usersRef.orderBy('timestamp', descending: true).limit(30).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return circularProgress();
@@ -261,7 +302,10 @@ class _TimelineState extends State<Timeline> {
         });
 
         return Container(
-          color: Theme.of(context).accentColor.withOpacity(0.2),
+          color: Theme
+              .of(context)
+              .accentColor
+              .withOpacity(0.2),
           child: Column(
             children: <Widget>[
               SizedBox(
@@ -299,7 +343,9 @@ class _TimelineState extends State<Timeline> {
                   children: <Widget>[
                     Icon(
                       Icons.person_add,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
                       size: 30.0,
                     ),
                     SizedBox(
@@ -308,7 +354,9 @@ class _TimelineState extends State<Timeline> {
                     Text(
                       "Users to Follow ",
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
                         fontSize: 30.0,
                       ),
                     ),

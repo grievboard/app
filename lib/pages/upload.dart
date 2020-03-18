@@ -27,8 +27,9 @@ class Upload extends StatefulWidget {
   String name;
   String desc;
   List<String> consequences;
+  Function refresh;
 
-  Upload({this.currentUser,this.name,this.consequences,this.desc});
+  Upload({this.currentUser,this.name,this.consequences,this.desc,this.refresh});
 
   @override
   _UploadState createState() => _UploadState();
@@ -199,15 +200,21 @@ class _UploadState extends State<Upload>
   }
 
   handleSubmit() async {
-   
+    String mediaUrl =  "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQuhKWRe6sfvliCNAeikhMskEyGNygLgQv8osgci1aDWkHchyvN";
     //ProgressDialog(context).style(progress: 50, message:"Uploading..." );
-     ProgressDialog(context).update( message: "Posting..." );
-    ProgressDialog(context).show();
+    if(file!=null){
+      await compressImage();
+      mediaUrl = await uploadImage(file);
+//      ProgressDialog(context).update( message: "Posting..." );
+//      ProgressDialog(context).show();
+    }
+
     setState(() {
       isUploading = true;
     });
-    await compressImage();
-    String mediaUrl = await uploadImage(file);
+
+
+
     createPostInFirestore(
       mediaUrl: mediaUrl,
       location: locationController.text,
@@ -220,8 +227,19 @@ class _UploadState extends State<Upload>
       isUploading = false;
       postId = Uuid().v4();
     });
-    
-    ProgressDialog(context).dismiss();
+
+
+
+     var count = 0;
+     widget.refresh();
+     Navigator.popUntil(context, (route) {
+       if(file!=null){
+         return count++ == 5;
+       }else{
+         return count++ == 4;
+       }
+
+     });
     //Timeline();
   }
   

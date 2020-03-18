@@ -19,8 +19,18 @@ class Post extends StatefulWidget {
   final String description;
   final String mediaUrl;
   final dynamic likes;
+  final String gpoccontact;
+  final String gpocname;
+  final String name;
+  final String status;
+  final List consequences;
 
   Post({
+    this.name,
+    this.consequences,
+    this.status,
+    this.gpoccontact,
+    this.gpocname,
     this.postId,
     this.ownerId,
     this.username,
@@ -39,6 +49,11 @@ class Post extends StatefulWidget {
       description: doc['description'],
       mediaUrl: doc['mediaUrl'],
       likes: doc['likes'],
+      consequences: doc['consequences'],
+      status: doc['status'],
+      name: doc['name'],
+      gpocname: doc['gpocname'],
+      gpoccontact: doc['gpoccontact'],
     );
   }
 
@@ -270,7 +285,22 @@ class _PostState extends State<Post> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          cachedNetworkImage(mediaUrl),
+          //cachedNetworkImage(mediaUrl),
+          Container(
+            height: 220.0,
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: widget.consequences.length,
+                itemBuilder: (context, i) {
+                  return Container(
+                    width: 2.0,
+                    child: OutlineButton(
+                      onPressed: () {},
+                      child: Text(widget.consequences[i]),
+                    ),
+                  );
+                }),
+          ),
           //Card(child: Container(height: 100.0,width: 400.0,child: Center(child: Text("Dummy"))),),
           showHeart
               ? Animator(
@@ -280,11 +310,10 @@ class _PostState extends State<Post> {
                   cycles: 0,
                   builder: (anim) => Transform.scale(
                     scale: anim.value,
-                     child:Image.asset(
+                    child: Image.asset(
                       'assets/images/partnership-handshake.png',
                       height: 90.0,
                       width: 90.0,
-
                     ),
                     // child: Icon(
                     //   Icons.favorite,
@@ -308,14 +337,16 @@ class _PostState extends State<Post> {
             Padding(padding: EdgeInsets.only(top: 40.0, left: 20.0)),
             GestureDetector(
               onTap: handleLikePost,
-              child: isLiked ? Image.asset(
+              child: isLiked
+                  ? Image.asset(
                       'assets/images/partnership-handshake.png',
                       height: 40.0,
                       width: 40.0,
-                      
-                    ) : Image.asset('assets/images/agreement.png',
-                    height: 40.0,
-                    width: 40.0,
+                    )
+                  : Image.asset(
+                      'assets/images/agreement.png',
+                      height: 40.0,
+                      width: 40.0,
                     ),
               // child: Icon(
               //   isLiked ? Icons.favorite : Icons.favorite_border,
@@ -324,22 +355,44 @@ class _PostState extends State<Post> {
               // ),
             ),
             Padding(padding: EdgeInsets.only(right: 20.0)),
-            // GestureDetector(
-            //   onTap: () => showComments(
-            //     context,
-            //     postId: postId,
-            //     ownerId: ownerId,
-            //     mediaUrl: mediaUrl,
-            //   ),
-            //   // child: Icon(     REMOVE COMMENTED LINES TO ACTIVE COMMENT OPTION
-            //   //   Icons.chat,
-            //   //   size: 28.0,
-            //   //   color: Colors.blue[900],
-            //   // ),
-            // ),
+            Container(
+
+              height: 30.0,
+              width: 60.0,
+              decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 5,
+                        spreadRadius: 4,
+                        offset: Offset(-4, -8))
+                  ]),
+              child: Center(
+                  child: Text(
+                widget.status,
+                style: TextStyle(color: Colors.white),
+              )),
+            )
+//            , GestureDetector(
+//               onTap: () => showComments(
+//                 context,
+//                 postId: postId,
+//                 ownerId: ownerId,
+//                 mediaUrl: mediaUrl,
+//               ),
+//                child: Icon(
+//                  Icons.chat,
+//                  size: 28.0,
+//                  color: Colors.blue[900],
+//                ),
+//             ),
           ],
         ),
-        SizedBox(height: 5.0,),
+        SizedBox(
+          height: 5.0,
+        ),
         Row(
           children: <Widget>[
             Container(
@@ -350,30 +403,29 @@ class _PostState extends State<Post> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
-        
-              ),
-          
-            ),
-          
-          ],
-        ),
-        SizedBox(height: 5.0,),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "$username ",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
               ),
             ),
-            Expanded(child: Text(description))
           ],
         ),
+        SizedBox(
+          height: 5.0,
+        ),
+//        Row(
+//          crossAxisAlignment: CrossAxisAlignment.start,
+//          children: <Widget>[
+//            Container(
+//              margin: EdgeInsets.only(left: 20.0),
+//              child: Text(
+//                "$username ",
+//                style: TextStyle(
+//                  color: Colors.black,
+//                  fontWeight: FontWeight.bold,
+//                ),
+//              ),
+//            ),
+//           // Expanded(child: Text(widget.status,style: TextStyle(color: Colors.white),))
+//          ],
+//        ),
       ],
     );
   }
@@ -382,13 +434,35 @@ class _PostState extends State<Post> {
   Widget build(BuildContext context) {
     isLiked = (likes[currentUserId] == true);
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        buildPostHeader(),
-        buildPostImage(),
-        buildPostFooter()
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 5,
+                  spreadRadius: 4,
+                  offset: Offset(-4, -8))
+            ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Text(
+                widget.name,
+                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+            buildPostImage(),
+            buildPostFooter()
+          ],
+        ),
+      ),
     );
   }
 }
