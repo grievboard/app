@@ -12,6 +12,7 @@ import './profile.dart';
 import './newpost.dart';
 import './postpages/page1.dart';
 import '../utils/transitionz.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
@@ -142,6 +143,7 @@ class _TimelineState extends State<Timeline> {
 //        ),
 //      );
 
+
       return Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -149,7 +151,21 @@ class _TimelineState extends State<Timeline> {
             controller: _controller,
             slivers: <Widget>[
               SliverToBoxAdapter(
-                  child: Column(
+                  child: Stack(children: <Widget>[ ShaderMask(
+                    shaderCallback: (rect) {
+                      return LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.black, Colors.transparent],
+                      ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+                    },
+                    blendMode: BlendMode.dstIn,
+                    child: SvgPicture.asset(
+                      "assets/images/topography.svg",fit: BoxFit.cover,height: 500.0,
+                      semanticsLabel: 'Acme Logo',color: Colors.deepPurple.withOpacity(0.3),
+                    ),
+                  )
+                    ,Column(
                     children: <Widget>[
                       SizedBox(height: 50.0,),
                       Padding(
@@ -240,7 +256,7 @@ class _TimelineState extends State<Timeline> {
                             child: Text("▼ click to scroll down")),
                       )
                     ],
-                  )),
+                  )],)),
               newsListSliver
             ],
           ),
@@ -271,7 +287,7 @@ class _TimelineState extends State<Timeline> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       );
     }

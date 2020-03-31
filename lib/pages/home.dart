@@ -176,6 +176,7 @@ class _HomeState extends State<Home> {
   onPageChanged(int pageIndex) {
     setState(() {
       this.pageIndex = pageIndex;
+      print(pageIndex);
     });
   }
 

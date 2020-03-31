@@ -10,20 +10,24 @@ import '../pages/comments.dart';
 import '../pages/home.dart';
 import './custom_image.dart';
 import './progress.dart';
+import '../pages/pc.dart';
 
 class Post extends StatefulWidget {
   final String postId;
   final String ownerId;
+  final String mediaUrl;
+
   final String username;
   final String location;
-  final String description;
-  final String mediaUrl;
+
   final dynamic likes;
+
   final String gpoccontact;
   final String gpocname;
   final String name;
   final String status;
   final List consequences;
+  final String description;
 
   Post({
     this.name,
@@ -216,7 +220,7 @@ class _PostState extends State<Post> {
           .collection('userPosts')
           .document(postId)
           .updateData({'likes.$currentUserId': false});
-      removeLikeFromActivityFeed();
+      //removeLikeFromActivityFeed();
       setState(() {
         likeCount -= 1;
         isLiked = false;
@@ -228,7 +232,7 @@ class _PostState extends State<Post> {
           .collection('userPosts')
           .document(postId)
           .updateData({'likes.$currentUserId': true});
-      addLikeToActivityFeed();
+      //addLikeToActivityFeed();
       setState(() {
         likeCount += 1;
         isLiked = true;
@@ -436,31 +440,45 @@ class _PostState extends State<Post> {
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(30.0)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 5,
-                  spreadRadius: 4,
-                  offset: Offset(-4, -8))
-            ]),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Text(
-                widget.name,
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+      child: GestureDetector(
+        onTap: () => showComments(
+          context,
+          gpoccontact: widget.gpoccontact,
+          gpocname: widget.gpocname,
+          name: widget.name,
+          status: widget.status,
+          consequences: widget.consequences,
+          description: description,
+          postId: postId,
+          ownerId: ownerId,
+          mediaUrl: mediaUrl,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 5,
+                    spreadRadius: 4,
+                    offset: Offset(-4, -8))
+              ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Text(
+                  widget.name,
+                  style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            buildPostImage(),
-            buildPostFooter()
-          ],
+              buildPostImage(),
+              buildPostFooter()
+            ],
+          ),
         ),
       ),
     );
@@ -468,9 +486,20 @@ class _PostState extends State<Post> {
 }
 
 showComments(BuildContext context,
-    {String postId, String ownerId, String mediaUrl}) {
+    {String postId, String ownerId, String mediaUrl,final String gpoccontact,
+    final String gpocname,
+    final String name,
+    final String status,
+    final List consequences,
+    final String description}) {
   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    return Comments(
+    return pC(
+   gpoccontact: gpoccontact,
+      gpocname: gpocname,
+      name: name,
+      status: status,
+      consequences: consequences,
+      description: description,
       postId: postId,
       postOwnerId: ownerId,
       postMediaUrl: mediaUrl,

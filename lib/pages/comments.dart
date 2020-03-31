@@ -11,6 +11,8 @@ class Comments extends StatefulWidget {
   final String postOwnerId;
   final String postMediaUrl;
 
+
+
   Comments({
     this.postId,
     this.postOwnerId,
@@ -85,7 +87,7 @@ class CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, titleText: "Comments"),
+
       body: Column(
         children: <Widget>[
           Expanded(child: buildComments()),
