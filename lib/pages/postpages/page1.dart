@@ -56,7 +56,7 @@ class pageOneState extends State<pageOne> {
   Widget build(BuildContext context) {
     refresh=widget.temp;
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Colors.black,
         title: Text("Name"),
       ),
       body: Column(
@@ -106,7 +106,7 @@ class pageTwoState extends State<pageTwo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Colors.black,
         title: Text("List of consequences"),
       ),
       body: ListView(
@@ -188,7 +188,7 @@ class pageThreeState extends State<pageThree> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Colors.black,
         title: Text("Description"),
       ),
       body: Column(

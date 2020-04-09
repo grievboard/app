@@ -250,7 +250,7 @@ class _UploadState extends State<Upload>
         backgroundColor: Colors.white70,
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: clearImage),
+            onPressed: (){Navigator.pop(context);}),
         title: Text(
           "Caption Post",
           style: TextStyle(color: Colors.black),

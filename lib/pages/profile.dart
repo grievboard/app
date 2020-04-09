@@ -21,7 +21,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final String currentUserId = currentUser?.id;
-  String postOrientation = "grid";
+  String postOrientation = "list";
   bool isFollowing = false;
   bool isLoading = false;
   int postCount = 0;
@@ -149,7 +149,7 @@ class _ProfileState extends State<Profile> {
     bool isProfileOwner = currentUserId == widget.profileId;
     if (isProfileOwner) {
       return buildButton(
-        text: "Edit Profile",
+        text: "Settings",
         function: editProfile,
       );
     } else if (isFollowing) {
@@ -264,8 +264,8 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               buildCountColumn("posts", postCount),
-                              buildCountColumn("followers", followerCount),
-                              buildCountColumn("following", followingCount),
+//                              buildCountColumn("followers", followerCount),
+//                              buildCountColumn("following", followingCount),
                             ],
                           ),
                           Row(
@@ -367,13 +367,13 @@ class _ProfileState extends State<Profile> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        IconButton(
-          onPressed: () => setPostOrientation("grid"),
-          icon: Icon(Icons.grid_on),
-          color: postOrientation == 'grid'
-              ? Theme.of(context).primaryColor
-              : Colors.grey,
-        ),
+//        IconButton(
+//          onPressed: () => setPostOrientation("grid"),
+//          icon: Icon(Icons.grid_on),
+//          color: postOrientation == 'grid'
+//              ? Theme.of(context).primaryColor
+//              : Colors.grey,
+//        ),
         IconButton(
           onPressed: () => setPostOrientation("list"),
           icon: Icon(Icons.list),

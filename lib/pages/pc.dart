@@ -67,7 +67,7 @@ class pCState extends State<pC> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Colors.black,
         title: Text("Description"),
       ),
       body: PageView( controller: pageController,
@@ -84,7 +84,7 @@ class pCState extends State<pC> {
         postMediaUrl: widget.postMediaUrl,)],), bottomNavigationBar: CupertinoTabBar(
         currentIndex: pageIndex,
         onTap: onTap,
-        activeColor: Theme.of(context).primaryColor,
+        activeColor: Colors.black,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.description)),
           //BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
