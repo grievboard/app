@@ -1,6 +1,8 @@
 //cdimport 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import './pages/home.dart';
+//import 'package:grievboard/pages/home.dart';
+import 'package:grievboard/pages/splash_screen.dart';
+//import './pages/home.dart';
 
 void main() {
   // Firestore.instance.settings(timestampsInSnapshotsEnabled: true).then((_) {
@@ -21,7 +23,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.teal,
       ),
-      home: Home(),
+      home: SplashScreen(),
+      //SplashScreen(),
     );
   }
 }

@@ -176,7 +176,6 @@ class _HomeState extends State<Home> {
   onPageChanged(int pageIndex) {
     setState(() {
       this.pageIndex = pageIndex;
-      print(pageIndex);
     });
   }
 
@@ -229,54 +228,102 @@ class _HomeState extends State<Home> {
   Scaffold buildUnAuthScreen() {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Theme.of(context).accentColor,
-              Theme.of(context).primaryColor,
-            ],
-          ),
-        ),
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'GrievBoard',
-              style: TextStyle(
-                fontFamily: "Signatra",
-                fontSize: 90.0,
-                color: Colors.white,
-              ),
-            ),
-            showsignin? GestureDetector(
-              onTap: login,
-              child: Container(
-                width: 260.0,
-                height: 60.0,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/google_signin_button.png',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            
-            ):
-            Center(
+	        child: Column(
+	          children: <Widget>[
+	            Container(
+	              height: 870,
+                width: 400,
+	              decoration: BoxDecoration(
+	                image: DecorationImage(
+	                  image: AssetImage('assets/images/display.jpg'),
+	                  fit: BoxFit.fill
+	                )
+	              ),
+                
+	              child: Stack(
+	                children: <Widget>[
+                    
+	                  Positioned(
+                      right: -250,
+	                    top: 100,
+	                    width: 780,
+	                    height: 650,
+                     child: showsignin? GestureDetector(
+                      onTap: login,
+	                    
+                      child:Container(
+                        width: 10.0,
+                        height: 30.0,
+                        
+	                      decoration: BoxDecoration(
+	                        image: DecorationImage(
+	                          image: AssetImage('assets/images/google_signin_button.png'),
+	                        )
+	                      ),
+	                    ),
+                     ):
+                     Center(
               child: Padding(
-                padding: const EdgeInsets.only(top:10.0),
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          ],
-        ),
-      ),
+                 padding: const EdgeInsets.only(top:10.0),
+                 child: CircularProgressIndicator(),
+               ),
+             ),
+	                  ),
+	                ],
+	              ),
+	            ),
+	          ],
+	        ),
+	      ),
+      // body: Container(
+      //   decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //       begin: Alignment.topRight,
+      //       end: Alignment.bottomLeft,
+      //       colors: [
+      //         Theme.of(context).accentColor,
+      //         Theme.of(context).primaryColor,
+      //       ],
+      //     ),
+      //   ),
+      //   alignment: Alignment.center,
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     crossAxisAlignment: CrossAxisAlignment.center,
+      //     children: <Widget>[
+      //       Text(
+      //         'GrievBoard',
+      //         style: TextStyle(
+      //           fontFamily: "Signatra",
+      //           fontSize: 90.0,
+      //           color: Colors.white,
+      //         ),
+      //       ),
+      //       showsignin? GestureDetector(
+      //         onTap: login,
+      //         child: Container(
+      //           width: 260.0,
+      //           height: 60.0,
+      //           decoration: BoxDecoration(
+      //             image: DecorationImage(
+      //               image: AssetImage(
+      //                 'assets/images/google_signin_button.png',
+      //               ),
+      //               fit: BoxFit.cover,
+      //             ),
+      //           ),
+      //         ),
+            
+      //       ):
+      //       Center(
+      //         child: Padding(
+      //           padding: const EdgeInsets.only(top:10.0),
+      //           child: CircularProgressIndicator(),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
